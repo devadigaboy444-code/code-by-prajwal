@@ -1,0 +1,302 @@
+:root {
+  --bg-color: #050505;
+  --primary-red: #ff3c3c;
+  --accent-yellow: #f1c40f;
+  --accent-blue: #3498db;
+  --text-main: #ffffff;
+  --glass: rgba(0, 0, 0, 0.8);
+  --border: rgba(255, 255, 255, 0.1);
+  --current-theme: var(--primary-red);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  cursor: none !important;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  font-family: "Rajdhani", sans-serif;
+  overflow: hidden; /* Locked until login */
+  transition: background 0.5s ease;
+}
+
+/* --- UI Components --- */
+#cursor-follower {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background: var(--current-theme);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  box-shadow: 0 0 15px var(--current-theme);
+  transition:
+    transform 0.1s ease,
+    background 0.3s;
+}
+#cursor-ring {
+  position: fixed;
+  width: 35px;
+  height: 35px;
+  border: 1px solid var(--current-theme);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transition: all 0.2s ease-out;
+}
+#particle-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* --- Login Screen --- */
+#login-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+ -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+}
+
+#bg-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.5;
+  filter: grayscale(0.5);
+}
+
+.login-container {
+  position: relative;
+  width: 90%;
+  max-width: 400px;
+  padding: 3rem;
+  border-radius: 15px;
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  background: var(--glass);
+  border: 1px solid var(--primary-red);
+  text-align: center;
+  box-shadow: 0 0 50px rgba(255, 60, 60, 0.2);
+}
+
+.input-field {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  color: white;
+  font-family: "Rajdhani";
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 15px;
+  margin-top: 20px;
+  background: var(--primary-red);
+  border: none;
+  color: white;
+  font-family: "Orbitron";
+  font-weight: 900;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.submit-btn:hover {
+  box-shadow: 0 0 20px var(--primary-red);
+  transform: scale(1.02);
+}
+
+/* --- Main Content --- */
+#main-site {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1s;
+}
+.site-active #main-site {
+  opacity: 1;
+  visibility: visible;
+}
+
+section {
+  min-height: 100vh;
+  padding: 10vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+.hero-title {
+  font-size: clamp(3rem, 10vw, 8rem);
+  font-family: "Orbitron";
+  line-height: 0.9;
+  margin-bottom: 1rem;
+}
+
+.char-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5vw;
+  align-items: center;
+}
+.char-card {
+  aspect-ratio: 4/5;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  object-fit: cover;
+}
+
+.quote-box {
+  border-left: 3px solid var(--current-theme);
+  padding-left: 1.5rem;
+  font-size: 1.6rem;
+  margin: 2rem 0;
+  min-height: 4rem;
+  color: #ccc;
+}
+
+.stat-bar-bg {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  margin-top: 8px;
+  overflow: hidden;
+}
+.stat-bar-fill {
+  height: 100%;
+  background: var(--current-theme);
+  width: 0;
+  transition: width 2s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* --- Intro Animation --- */
+#intro-overlay {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 3000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  pointer-events: none;
+}
+.slash-line {
+  width: 0%;
+  height: 4px;
+  background: #fff;
+  box-shadow: 0 0 30px #fff;
+  transform: skewX(-45deg);
+  transition: width 0.8s ease-in-out;
+}
+
+@media (max-width: 768px) {
+  .char-section {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- Intro Section --- */
+#intro-overlay-content {
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+}
+#intro-text {
+  margin-top: 2rem;
+  opacity: 0;
+  font-family: "Orbitron";
+  letter-spacing: 10px;
+}
+
+/* --- Login Section --- */
+.login-container h1 {
+  font-family: "Orbitron";
+  color: var(--primary-red);
+  margin-bottom: 0.5rem;
+}
+.login-container p {
+  opacity: 0.6;
+  font-size: 0.9rem;
+}
+
+/* --- Hero Section --- */
+.hero-title {
+  color: var(--primary-red);
+}
+.hero-subtitle {
+  letter-spacing: 8px;
+  opacity: 0.5;
+}
+.hero-scroll {
+  margin-top: 5rem;
+  font-size: 0.8rem;
+  opacity: 0.3;
+}
+
+/* --- Character Cards --- */
+.char-card .char-icon {
+  width: 60%;
+  filter: drop-shadow(0 0 10px var(--current-theme));
+}
+.char-label {
+  color: var(--primary-red);
+}
+.char-label.yellow {
+  color: var(--accent-yellow);
+}
+.char-name {
+  font-size: 3.5rem;
+  font-family: "Orbitron";
+}
+.stat-label {
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+}
+.char-svg {
+  width: 40%;
+  filter: drop-shadow(0 0 10px #ff3c3c);
+}
+.svg-red {
+  fill: #ff3c3c;
+}
+.svg-yellow {
+  fill: #f1c40f;
+}
+.svg-green {
+  fill: #2ecc71;
+  filter: drop-shadow(0 0 10px #2ecc71);
+  width: 45%;
+}
+.char-stats {
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+}
+.char-label-green {
+  color: #2ecc71;
+}
+.char-name-inosuke {
+  font-size: 3.5rem;
+  font-family: "Orbitron";
+}

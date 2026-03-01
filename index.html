@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demon Slayer | Infinity Castle</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="intro-overlay">
+        <div id="intro-overlay-content">
+            <div class="slash-line" id="intro-slash"></div>
+        </div>
+        <div id="intro-text">UNSHEATHE YOUR SOUL</div>
+    </div>
+
+    <div id="cursor-follower"></div>
+    <div id="cursor-ring"></div>
+
+    <div id="login-screen">
+        <video autoplay muted loop id="bg-video">
+            <source src="D:\Photoshop\Phone Link\4K Infinity Castle Loop _ 150 Minutes of Mesmerizing Demon Slayer Visuals_(1080P_60FPS).mp4" type="video/mp4">
+        </video>
+        <div class="video-bg"></div>
+          <div class="login-container">
+              <h1>INFINITY CASTLE</h1>
+              <p>Identify yourself, Hashira</p>
+              <form id="login-form">
+                  <input type="email" class="input-field" placeholder="Crow Mail (Email)" required>
+                  <input type="password" class="input-field" placeholder="Secret Technique" required>
+                  <button type="submit" class="submit-btn">ENTER REALM</button>
+              </form>
+          </div>
+        </div>
+    </div>
+
+    <div id="main-site">
+        <canvas id="particle-canvas"></canvas>
+        <main>
+            <section id="hero" data-theme="#ff3c3c">
+                <h1 class="hero-title">DEMON<br>SLAYER</h1>
+                <p class="hero-subtitle">KIMETSU NO YAIBA EXPERIENCE</p>
+                <p class="hero-scroll">SCROLL TO BREATHE ↓</p>
+            </section>
+
+            <section class="char-section" id="tanjiro" data-theme="#ff3c3c" data-voice="tanjiro">
+                <div class="char-card">
+                    <img src="D:\OneDrive\Documents\Code\img\tanjiro_kamado_render_by_lunuel_dk80ecs.png" alt="Tanjiro Icon" class="char-icon">
+                </div>
+                <div>
+                    <span class="char-label">01 / SUN BREATHER</span>
+                    <h2 class="char-name">TANJIRO KAMADO</h2>
+                    <div class="quote-box"></div>
+                    <div>
+                        <p class="stat-label">HINOKAMI KAGURA</p>
+                        <div class="stat-bar-bg"><div class="stat-bar-fill" data-width="100%"></div></div>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="char-section" id="zenitsu" data-theme="#f1c40f" data-voice="zenitsu">
+                <div class="char-card">
+                    <img src="D:\OneDrive\Documents\Code\img\zenitsu_agatsuma_render_by_lunuel_dk80edx.png" alt="Tanjiro Icon" class="char-icon">
+                </div>
+                <div>
+                    <span class="char-label yellow">02 / THUNDER BREATHER</span>
+                    <h2 class="char-name">ZENITSU AGATSUMA</h2>
+                    <div class="quote-box"></div>
+                    <div>
+                        <p class="stat-label">GOD SPEED</p>
+                        <div class="stat-bar-bg"><div class="stat-bar-fill" data-width="99%"></div>
+                    </div>
+            </section>
+            <section class="char-section" id="inosuke" data-theme="#2ecc71" data-voice="inosuke">
+                <div class="char-card">
+                    <img src="D:\OneDrive\Documents\Code\img\inosuke_hashibira_render_by_lunuel_dk80ene.png" alt="Tanjiro Icon" class="char-icon">
+                </div>
+                <div>
+                    <span class="char-label-green">03 / BEAST BREATHER</span>
+                    <h2 class="char-name-inosuke">INOSUKE HASHIBIRA</h2>
+                    <div class="quote-box"></div>
+                    <div>
+                        <p class="char-stats">PIG ASSAULT / BOAR RUSH</p>
+                        <div class="stat-bar-bg"><div class="stat-bar-fill" data-width="95%"></div></div>
+                    </div>
+                </div>
+            </section>
+
+<audio id="audio-inosuke" src="https://www.myinstants.com/media/sounds/inosuke-猪突猛進.mp3"></audio>
+
+<script>
+   
+</script>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <audio id="audio-tanjiro" src="https://www.myinstants.com/media/sounds/hinokami-kagura.mp3"></audio>
+    <audio id="audio-zenitsu" src="https://www.myinstants.com/media/sounds/zenitsu-thunder-breathing-first-form.mp3"></audio>
+    <audio id="audio-slash" src="https://www.myinstants.com/media/sounds/sword-slash.mp3"></audio>
+
+    <script>
+        const state = {
+            mouseX: 0, mouseY: 0,
+            activeTheme: '#ff3c3c',
+            isSiteActive: false
+        };
+
+        const characters = {
+            tanjiro: "I will never give up. Even if my heart gives out, I'll keep going.",
+            zenitsu: "Thunder Breathing, First Form: Thunderclap and Flash."
+        };
+
+        // --- Optimized Cursor & Event Handling ---
+        const follower = document.getElementById('cursor-follower');
+        const ring = document.getElementById('cursor-ring');
+
+        document.addEventListener('mousemove', (e) => {
+            state.mouseX = e.clientX;
+            state.mouseY = e.clientY;
+            follower.style.transform = `translate(${state.mouseX - 4}px, ${state.mouseY - 4}px)`;
+            ring.style.transform = `translate(${state.mouseX - 17.5}px, ${state.mouseY - 17.5}px)`;
+        });
+
+        // --- Intro Sequence ---
+        window.addEventListener('load', () => {
+            const slash = document.getElementById('intro-slash');
+            const text = document.getElementById('intro-text');
+            setTimeout(() => {
+                document.getElementById('audio-slash').play();
+                slash.style.width = '150%';
+                setTimeout(() => { text.style.opacity = '1'; }, 600);
+                setTimeout(() => { 
+                    document.getElementById('intro-overlay').style.opacity = '0';
+                    setTimeout(() => document.getElementById('intro-overlay').remove(), 1000);
+                }, 2200);
+            }, 500);
+        });
+
+        // --- Login Logic ---
+        document.getElementById('login-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            document.getElementById('audio-tanjiro').play(); // Voice on success
+            
+            document.getElementById('login-screen').style.transform = 'translateY(-100%)';
+            document.body.style.overflow = 'auto';
+            document.body.classList.add('site-active');
+            state.isSiteActive = true;
+            initParticles();
+        });
+
+        // --- Efficient Particle Engine ---
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function initParticles() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            particles = Array.from({ length: 80 }, () => ({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vX: (Math.random() - 0.5) * 1.5,
+                vY: (Math.random() - 0.5) * 1.5,
+                s: Math.random() * 2
+            }));
+            render();
+        }
+
+        function render() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = state.activeTheme;
+            particles.forEach(p => {
+                p.x += p.vX; p.y += p.vY;
+                if(p.x < 0 || p.x > canvas.width) p.vX *= -1;
+                if(p.y < 0 || p.y > canvas.height) p.vY *= -1;
+                ctx.beginPath(); ctx.arc(p.x, p.y, p.s, 0, Math.PI*2); ctx.fill();
+            });
+            requestAnimationFrame(render);
+        }
+
+        // --- Intersection Observer (Themes & Voice) ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const theme = entry.target.dataset.theme;
+                    const charId = entry.target.id;
+                    const voiceId = entry.target.dataset.voice;
+
+                    if(theme) {
+                        state.activeTheme = theme;
+                        document.documentElement.style.setProperty('--current-theme', theme);
+                    }
+
+                    // Play Voice
+                    if(voiceId && state.isSiteActive) {
+                        const voice = document.getElementById(`audio-${voiceId}`);
+                        voice.currentTime = 0;
+                        voice.play();
+                    }
+
+                    // Trigger Stats
+                    const bar = entry.target.querySelector('.stat-bar-fill');
+                    if(bar) bar.style.width = bar.dataset.width;
+
+                    // Typewriter Quote
+                    const quoteDiv = entry.target.querySelector('.quote-box');
+                    if(quoteDiv && !quoteDiv.innerText && characters[charId]) {
+                        const text = characters[charId];
+                        let i = 0;
+                        const type = () => {
+                            if(i < text.length) { quoteDiv.innerText += text[i++]; setTimeout(type, 35); }
+                        };
+                        type();
+                    }
+                }
+            });
+        }, { threshold: 0.6 });
+
+        document.querySelectorAll('section').forEach(sec => observer.observe(sec));
+
+        // Window Resize Handling
+        window.addEventListener('resize', () => {
+            if(state.isSiteActive) {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+        });
+         /* --- Updated JavaScript logic to include Inosuke --- */
+    
+    // 1. Update the character quotes object
+    characters.inosuke = "Coming through! Pig assault! Better step aside, 'cause Lord Inosuke is here!";
+
+    // 2. Enhanced Voice Controller (Prevents audio overlap)
+    const playVoice = (id) => {
+        // Stop all other voices before playing the new one
+        document.querySelectorAll('audio').forEach(audio => {
+            if(audio.id !== 'audio-slash') { // Don't stop the UI slash sound
+                audio.pause();
+                audio.currentTime = 0;
+            }
+        });
+        
+        const activeVoice = document.getElementById(`audio-${id}`);
+        if(activeVoice) {
+            activeVoice.volume = 0.7;
+            activeVoice.play().catch(e => console.log("Audio play blocked by browser. Click anywhere first."));
+        }
+    };
+
+    // 3. Update the Intersection Observer Logic
+    // In your existing Observer, replace the "Play Voice" block with:
+    /*
+    if(voiceId && state.isSiteActive) {
+        playVoice(voiceId);
+    }
+    */
+    </script>
+</body>
+</html>
